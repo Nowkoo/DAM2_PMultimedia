@@ -1,0 +1,7 @@
+Juan,25
+María,19
+Pedro,35
+Marta,66
+Fernando,77
+Pablo,12
+Marta,22

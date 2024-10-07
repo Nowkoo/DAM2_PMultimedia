@@ -1,28 +1,45 @@
 package Tema1
 
-import java.util.*
-
 fun main() {
     var fechaString = pedirFecha()
-    var fecha: Date
-
-    var day: Int = 1
-    var month: Int = 12
-    var year: Int = 1999
-
-    var esBisiesto: Boolean = isBisiesto(year)
-
-    var esFechaValida =
-        if (validDay(day) && validMonth(month, day, esBisiesto) && validYear(year)) true else false
+    var esFechaValida = formatoValido(fechaString)
+    println("La fecha introducida es válida: $esFechaValida")
 }
 
 fun pedirFecha(): String {
     var input: String
     do {
-        println("Introduce una fecha: ")
+        println("Introduce una fecha (DD/MM/AAAA): ")
         input = readln()
     } while (input.isEmpty())
     return input
+}
+
+fun formatoValido(fecha: String): Boolean {
+    var fechaDividida = fecha.split('/')
+    if (fechaDividida.size == 3 && contieneNumero(fechaDividida)) {
+        var day = fechaDividida[0].toInt()
+        var month = fechaDividida[1].toInt()
+        var year = fechaDividida[2].toInt()
+        var esBisiesto: Boolean = isBisiesto(year)
+
+        return (validDay(day) && validMonth(month, day, esBisiesto) && validYear(year))
+    }
+    return false
+}
+
+fun contieneNumero(fecha: List<String>): Boolean {
+    for (parte in fecha) {
+        if (parte.equals("") || !esDigito(parte)) return false
+    }
+    return true
+}
+
+fun esDigito(cadena: String): Boolean {
+    for (caracter in cadena) {
+        if (!"0123456789".contains(caracter)) return false
+    }
+    return true
 }
 
 fun validDay(day: Int): Boolean {
