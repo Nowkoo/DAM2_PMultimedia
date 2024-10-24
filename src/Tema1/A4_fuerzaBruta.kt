@@ -9,11 +9,11 @@ fun main() {
     }
 }
 
-fun mejorCombinacion(articulos: List<Articulo>, pesoMaximo: Double): List<Articulo> {
+fun mejorCombinacion(articulos: List<Objeto>, pesoMaximo: Double): List<Objeto> {
     val combinaciones = combinaciones(articulos)
 
     var mejorValor = 0.0
-    var mejorCombinacion: List<Articulo> =  emptyList()
+    var mejorCombinacion: List<Objeto> =  emptyList()
 
     for (combinacion in combinaciones) {
         val pesoTotal = combinacion.sumOf { articulo -> articulo.peso }
@@ -28,8 +28,8 @@ fun mejorCombinacion(articulos: List<Articulo>, pesoMaximo: Double): List<Articu
     return mejorCombinacion
 }
 
-fun combinaciones(articulos: List<Articulo>): List<List<Articulo>> {
-    val todasLasCombinaciones = mutableListOf<List<Articulo>>()
+fun combinaciones(articulos: List<Objeto>): List<List<Objeto>> {
+    val todasLasCombinaciones = mutableListOf<List<Objeto>>()
     todasLasCombinaciones.add(emptyList())
 
     for (articulo in articulos) {
@@ -44,13 +44,13 @@ fun combinaciones(articulos: List<Articulo>): List<List<Articulo>> {
     return todasLasCombinaciones
 }
 
-fun obtenerArticulos(): List<Articulo> {
+fun obtenerArticulos(): List<Objeto> {
     return listOf(
-            Articulo("Refresco", 1.0, 2.0),
-            Articulo("Saco de manzanas", 3.0, 5.0),
-            Articulo("Comida para gato", 4.0, 10.0),
-            Articulo("Detergente para ropa", 5.0, 14.0),
-            Articulo("Mancuerna de 7 kg", 7.0, 15.0),
+            Objeto("Refresco", 1.0, 2.0),
+            Objeto("Saco de manzanas", 3.0, 5.0),
+            Objeto("Comida para gato", 4.0, 10.0),
+            Objeto("Detergente para ropa", 5.0, 14.0),
+            Objeto("Mancuerna de 7 kg", 7.0, 15.0),
     )
 }
 
