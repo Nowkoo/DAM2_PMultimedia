@@ -1,26 +1,52 @@
 package Tema1
 
 fun main() {
-    val objetos = obtenerObjetos()
+    val objetosDisponibles = obtenerObjetos()
     val capacidadMaxima = 8
 
+    val matrizValoresMaximos = rellenarMatriz(objetosDisponibles, capacidadMaxima)
+    println("Valor máximo que se puede obtener: ${matrizValoresMaximos[objetosDisponibles.size][capacidadMaxima]}")
+
+    var mochila = extraerCombinacionConMejorValor(capacidadMaxima, objetosDisponibles, matrizValoresMaximos)
+    println(mochila)
+}
+
+private fun extraerCombinacionConMejorValor(
+    capacidadMaxima: Int,
+    objetos: List<Objeto>,
+    M: Array<DoubleArray>
+): MutableList<Objeto> {
+    var mochila = mutableListOf<Objeto>()
+    var pesoRestante = capacidadMaxima
+    for (i in objetos.size downTo 1) {
+        if (M[i][pesoRestante] != M[i - 1][pesoRestante]) {
+            mochila.add(objetos[i - 1])
+            pesoRestante -= objetos[i - 1].peso.toInt()
+        }
+    }
+    return mochila
+}
+
+private fun rellenarMatriz(
+    objetos: List<Objeto>,
+    capacidadMaxima: Int
+): Array<DoubleArray> {
     val M = Array(objetos.size + 1) { DoubleArray(capacidadMaxima + 1) }
 
     for (i in 1..objetos.size) {
         for (j in 0..capacidadMaxima) {
-            if (objetos[i-1].peso <= j) {
+            if (objetos[i - 1].peso <= j) {
                 M[i][j] = maxOf(
-                    M[i-1][j],
-                    objetos[i-1].valor + M[i-1][(j-objetos[i-1].peso).toInt()]
+                    M[i - 1][j],
+                    objetos[i - 1].valor + M[i - 1][(j - objetos[i - 1].peso).toInt()]
                 )
             } else {
-                M[i][j] = M[i-1][j]
+                M[i][j] = M[i - 1][j]
             }
         }
     }
 
-    println("Valor máximo que se puede obtener: ${M[objetos.size][capacidadMaxima]}")
-
+    return M
 }
 
 fun obtenerObjetos(): List<Objeto> {
